@@ -32,7 +32,7 @@ public class AuthController {
         User user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         if(passwordEncoder.matches(body.password(), user.getPassword())){
            String token = tokenService.generateToken(user);
-           return ResponseEntity.ok(new ResponseDTO(user.getName(), token, user.getRole()));
+           return ResponseEntity.ok(new ResponseDTO(user.getName(), user.getEmail(), token, user.getRole()));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -50,7 +50,7 @@ public class AuthController {
             userRepository.save(newUser);
 
             String token = tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token, newUser.getRole()));
+            return ResponseEntity.ok(new ResponseDTO(newUser.getName(), newUser.getEmail(), token, newUser.getRole()));
         }
         return ResponseEntity.badRequest().build();
     }
