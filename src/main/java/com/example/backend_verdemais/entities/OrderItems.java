@@ -1,6 +1,5 @@
 package com.example.backend_verdemais.entities;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,28 +7,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ITEMS")
+@Table(name = "ORDERITEMS")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+@AllArgsConstructor
+public class OrderItems {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false)
-    private String nome;
+    @OneToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
-    @Column(nullable = false)
-    private double preco;
+    @OneToOne
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 
     @Column(nullable = false)
     private int quantidade;
 
-    private Boolean habilitado;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(nullable = false)
+    private double preco_unitario;
 }
