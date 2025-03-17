@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class ItemService {
 
@@ -33,21 +35,47 @@ public class ItemService {
     }
 
     public MercadoriaDTO postMercadoria(MercadoriaDTO mercadoriaDTO) {
+
         Item item = new Item();
-        item.setId(mercadoriaDTO.id());
         item.setNome(mercadoriaDTO.nome());
         item.setPreco(mercadoriaDTO.preco());
         item.setHabilitado(mercadoriaDTO.habilitado());
-        item.setUser(userRepository.findByName(mercadoriaDTO.name()));
+        item.setUser(userRepository.findByName(mercadoriaDTO.username()));
 
         Item itemSaved = itemRepository.save(item);
         return new MercadoriaDTO(
-                itemSaved.getId(),
+                item.getId(),
                 itemSaved.getNome(),
                 itemSaved.getPreco(),
                 itemSaved.getHabilitado(),
-                itemSaved.getUser() != null ? itemSaved.getUser().getName() : null
+                itemSaved.getUser().getName()
         );
+    }
+
+    public MercadoriaDTO updateMercadoria(MercadoriaDTO mercadoriaDTO) {
+        Item existingItem = itemRepository.findById(mercadoriaDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));
+
+        existingItem.setNome(mercadoriaDTO.nome());
+        existingItem.setPreco(mercadoriaDTO.preco());
+        existingItem.setHabilitado(mercadoriaDTO.habilitado());
+        existingItem.setUser(userRepository.findByName(mercadoriaDTO.username()));
+
+        Item updatedItem = itemRepository.save(existingItem);
+        return new MercadoriaDTO(
+                updatedItem.getId(),
+                updatedItem.getNome(),
+                updatedItem.getPreco(),
+                updatedItem.getHabilitado(),
+                updatedItem.getUser() != null ? updatedItem.getUser().getName() : null
+        );
+    }
+
+    public MercadoriaDTO saveOrUpdateMercadoria(MercadoriaDTO mercadoriaDTO) {
+        if (isNull(mercadoriaDTO.id())) {
+            return postMercadoria(mercadoriaDTO);
+        }
+        return updateMercadoria(mercadoriaDTO);
     }
 }
 

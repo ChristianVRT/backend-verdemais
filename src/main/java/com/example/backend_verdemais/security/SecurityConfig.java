@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/signup").permitAll()
-                        .requestMatchers("/mercadoria*").hasRole("ADMIN")
+                        .requestMatchers("/auth/login", "/auth/signup", "/mercadoria*").permitAll()
+                        //.requestMatchers("/mercadoria*").hasRole("USUARIO")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

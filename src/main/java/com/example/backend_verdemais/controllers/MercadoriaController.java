@@ -25,8 +25,8 @@ public class MercadoriaController {
     }
 
     @PostMapping()
-    public ResponseEntity<MercadoriaDTO> postMercadoria(@RequestBody MercadoriaDTO mercadoriaDTO) {
-        MercadoriaDTO createdMercadoria = itemService.postMercadoria(mercadoriaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdMercadoria);
+    public ResponseEntity<MercadoriaDTO> saveOrUpdateMercadoria(@RequestBody MercadoriaDTO mercadoriaDTO) {
+        MercadoriaDTO mercadoria = itemService.saveOrUpdateMercadoria(mercadoriaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mercadoria);
     }
 }

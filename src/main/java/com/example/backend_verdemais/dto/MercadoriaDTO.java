@@ -5,5 +5,5 @@ public record MercadoriaDTO(
         String nome,
         double preco,
         Boolean habilitado,
-        String name
+        String username
 ) {}
