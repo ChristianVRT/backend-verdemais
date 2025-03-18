@@ -38,23 +38,15 @@ public class ItemService {
         return MercadoriaMapper.paraDTO(itemSalvo);
     }
 
-    public MercadoriaDTO updateMercadoria(MercadoriaDTO mercadoriaDTO) {
+    public MercadoriaDTO updateMercadoria(Long id, MercadoriaDTO mercadoriaDTO) {
 
-        Item item = itemRepository.findById(mercadoriaDTO.id())
-                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + id));
 
         preencheMercadoria(mercadoriaDTO, item);
 
         Item itemAtualizado = itemRepository.saveAndFlush(item);
         return MercadoriaMapper.paraDTO(itemAtualizado);
-    }
-
-    public MercadoriaDTO saveOrUpdateMercadoria(MercadoriaDTO mercadoriaDTO) {
-
-        if (isNull(mercadoriaDTO.id())) {
-            return postMercadoria(mercadoriaDTO);
-        }
-        return updateMercadoria(mercadoriaDTO);
     }
 
     public void preencheMercadoria(MercadoriaDTO mercadoriaDTO, Item item) {
@@ -67,10 +59,10 @@ public class ItemService {
         MercadoriaMapper.paraDTO(item);
     }
 
-    public MercadoriaDTO deleteMercadoria(MercadoriaDTO mercadoriaDTO) {
+    public MercadoriaDTO deleteMercadoria(Long id) {
 
-        Item item = itemRepository.findById(mercadoriaDTO.id())
-                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));;
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + id));;
 
         itemRepository.delete(item);
 

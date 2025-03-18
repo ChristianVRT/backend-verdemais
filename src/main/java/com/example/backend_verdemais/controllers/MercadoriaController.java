@@ -25,14 +25,20 @@ public class MercadoriaController {
     }
 
     @PostMapping()
-    public ResponseEntity<MercadoriaDTO> saveOrUpdateMercadoria(@RequestBody MercadoriaDTO mercadoriaDTO) {
-        MercadoriaDTO mercadoria = itemService.saveOrUpdateMercadoria(mercadoriaDTO);
+    public ResponseEntity<MercadoriaDTO> postMercadoria(@RequestBody MercadoriaDTO mercadoriaDTO) {
+        MercadoriaDTO mercadoria = itemService.postMercadoria(mercadoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(mercadoria);
     }
 
-    @PostMapping("/deletar")
-    public ResponseEntity<MercadoriaDTO> deleteMercadoria(@RequestBody MercadoriaDTO mercadoriaDTO) {
-        MercadoriaDTO mercadoria = itemService.deleteMercadoria(mercadoriaDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(mercadoria);
+    @PutMapping("/{id}")
+    public ResponseEntity<MercadoriaDTO> updateMercadoria(@PathVariable Long id, @RequestBody MercadoriaDTO mercadoriaDTO) {
+        MercadoriaDTO mercadoria = itemService.updateMercadoria(id, mercadoriaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mercadoria);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMercadoria(@PathVariable Long id) {
+        itemService.deleteMercadoria(id);
+        return ResponseEntity.noContent().build();
     }
 }

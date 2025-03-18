@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/signup", "/mercadoria*", "/mercadoria/deletar").permitAll()
+                        .requestMatchers("/auth/login", "/auth/signup", "/mercadoria*", "/mercadoria/{id}").permitAll()
                         //.requestMatchers("/mercadoria*").hasRole("USUARIO")
                         .anyRequest().authenticated()
                 )
