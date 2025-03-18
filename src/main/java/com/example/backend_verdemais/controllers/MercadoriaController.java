@@ -29,4 +29,10 @@ public class MercadoriaController {
         MercadoriaDTO mercadoria = itemService.saveOrUpdateMercadoria(mercadoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(mercadoria);
     }
+
+    @PostMapping("/deletar")
+    public ResponseEntity<MercadoriaDTO> deleteMercadoria(@RequestBody MercadoriaDTO mercadoriaDTO) {
+        MercadoriaDTO mercadoria = itemService.deleteMercadoria(mercadoriaDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(mercadoria);
+    }
 }
