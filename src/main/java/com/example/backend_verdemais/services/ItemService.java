@@ -2,7 +2,7 @@ package com.example.backend_verdemais.services;
 
 import com.example.backend_verdemais.dto.MercadoriaDTO;
 import com.example.backend_verdemais.entities.Item;
-import com.example.backend_verdemais.entities.User;
+import com.example.backend_verdemais.mappers.MercadoriaMapper;
 import com.example.backend_verdemais.repositories.ItemRepository;
 import com.example.backend_verdemais.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,57 +25,59 @@ public class ItemService {
     public List<MercadoriaDTO> getAllMercadorias() {
         List<Item> items = itemRepository.findAll();
         return items.stream()
-                .map(item -> new MercadoriaDTO(
-                        item.getId(),
-                        item.getNome(),
-                        item.getPreco(),
-                        item.getHabilitado(),
-                        item.getUser().getName()
-                )).collect(Collectors.toList());
+                .map(MercadoriaMapper::paraDTO).collect(Collectors.toList());
     }
 
     public MercadoriaDTO postMercadoria(MercadoriaDTO mercadoriaDTO) {
 
         Item item = new Item();
-        item.setNome(mercadoriaDTO.nome());
-        item.setPreco(mercadoriaDTO.preco());
-        item.setHabilitado(mercadoriaDTO.habilitado());
-        item.setUser(userRepository.findByName(mercadoriaDTO.username()));
 
-        Item itemSaved = itemRepository.save(item);
-        return new MercadoriaDTO(
-                item.getId(),
-                itemSaved.getNome(),
-                itemSaved.getPreco(),
-                itemSaved.getHabilitado(),
-                itemSaved.getUser().getName()
-        );
+        preencheMercadoria(mercadoriaDTO, item);
+
+        Item itemSalvo = itemRepository.saveAndFlush(item);
+        return MercadoriaMapper.paraDTO(itemSalvo);
     }
 
     public MercadoriaDTO updateMercadoria(MercadoriaDTO mercadoriaDTO) {
-        Item existingItem = itemRepository.findById(mercadoriaDTO.id())
+
+        Item item = itemRepository.findById(mercadoriaDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));
 
-        existingItem.setNome(mercadoriaDTO.nome());
-        existingItem.setPreco(mercadoriaDTO.preco());
-        existingItem.setHabilitado(mercadoriaDTO.habilitado());
-        existingItem.setUser(userRepository.findByName(mercadoriaDTO.username()));
+        preencheMercadoria(mercadoriaDTO, item);
 
-        Item updatedItem = itemRepository.save(existingItem);
-        return new MercadoriaDTO(
-                updatedItem.getId(),
-                updatedItem.getNome(),
-                updatedItem.getPreco(),
-                updatedItem.getHabilitado(),
-                updatedItem.getUser() != null ? updatedItem.getUser().getName() : null
-        );
+        Item itemAtualizado = itemRepository.saveAndFlush(item);
+        return MercadoriaMapper.paraDTO(itemAtualizado);
     }
 
     public MercadoriaDTO saveOrUpdateMercadoria(MercadoriaDTO mercadoriaDTO) {
+
         if (isNull(mercadoriaDTO.id())) {
             return postMercadoria(mercadoriaDTO);
         }
         return updateMercadoria(mercadoriaDTO);
     }
+
+    public void preencheMercadoria(MercadoriaDTO mercadoriaDTO, Item item) {
+
+        item.setNome(mercadoriaDTO.nome());
+        item.setPreco(mercadoriaDTO.preco());
+        item.setHabilitado(mercadoriaDTO.habilitado());
+        item.setUser(userRepository.findByName(mercadoriaDTO.username()));
+
+        MercadoriaMapper.paraDTO(item);
+    }
+
+    public MercadoriaDTO deleteMercadoria(MercadoriaDTO mercadoriaDTO) {
+
+        Item item = itemRepository.findById(mercadoriaDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));;
+
+        itemRepository.delete(item);
+
+        return MercadoriaMapper.paraDTO(item);
+
+    }
+
+
 }
 
