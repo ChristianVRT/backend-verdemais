@@ -14,8 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OrderItems {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
