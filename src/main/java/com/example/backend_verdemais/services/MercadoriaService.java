@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 
-public class ItemService {
+public class MercadoriaService {
 
     @Autowired
     private MercadoriaRepository mercadoriaRepository;
