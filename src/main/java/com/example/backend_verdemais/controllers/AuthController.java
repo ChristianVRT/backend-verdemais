@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/auth")
@@ -29,7 +30,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body){
-        Usuario usuario = this.usuarioRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Usuario usuario = this.usuarioRepository.findByEmail(body.email());
+                if (isNull(usuario)) throw new RuntimeException("Usuário não encontrado");
         if(passwordEncoder.matches(body.password(), usuario.getPassword())){
            String token = tokenService.generateToken(usuario);
            return ResponseEntity.ok(new ResponseDTO(usuario.getName(), usuario.getEmail(), token, usuario.getRole()));
@@ -39,9 +41,9 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<ResponseDTO> signup(@RequestBody SignupRequestDTO body) {
-        Optional<Usuario> user = usuarioRepository.findByEmail(body.email());
+        Usuario user = usuarioRepository.findByEmail(body.email());
 
-        if (user.isEmpty()) {
+        if (!isNull(user)) {
             Usuario newUsuario = new Usuario();
             newUsuario.setEmail(body.email());
             newUsuario.setPassword(passwordEncoder.encode(body.password()));

@@ -55,6 +55,25 @@ public class TokenService {
         }
     }
 
+    public String extrairRole(String token){
+        try {
+            DecodedJWT decodedJWT = getDecodedJWT(token);
+            return decodedJWT.getClaim("role").asString();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Erro ao tentar gerar token.");
+        }
+    }
+
+    public String extrairEmail(String token){
+        DecodedJWT decodedJWT = getDecodedJWT(token);
+        return decodedJWT.getClaim("email").asString();
+    }
+
+    public boolean isAdmin(String token){
+        DecodedJWT decodedJWT = getDecodedJWT(token);
+        return decodedJWT.getClaim("role").asString().equals("admin");
+    }
+
     private Instant generateExpirationDate(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
