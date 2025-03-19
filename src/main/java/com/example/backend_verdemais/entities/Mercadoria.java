@@ -8,28 +8,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ITEMS")
+@Table(name = "tb_mercadoria")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class Mercadoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_mercadoria")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "nome_mercadoria", nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(name = "preco_mercadoria", nullable = false)
     private double preco;
 
-    @Column(nullable = false)
+    @Column(name = "quantidade_mercadoria", nullable = false)
     private int quantidade;
 
+    @Column(name = "habilitado_mercadoria")
     private Boolean habilitado;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Usuario usuario;
+
 }
+

@@ -4,8 +4,8 @@ import com.example.backend_verdemais.dto.LoginRequestDTO;
 import com.example.backend_verdemais.dto.ResponseDTO;
 
 import com.example.backend_verdemais.dto.SignupRequestDTO;
-import com.example.backend_verdemais.entities.User;
-import com.example.backend_verdemais.repositories.UserRepository;
+import com.example.backend_verdemais.entities.Usuario;
+import com.example.backend_verdemais.repositories.UsuarioRepository;
 import com.example.backend_verdemais.security.TokenService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,34 +23,34 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserRepository userRepository;
+    private final UsuarioRepository usuarioRepository;
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body){
-        User user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if(passwordEncoder.matches(body.password(), user.getPassword())){
-           String token = tokenService.generateToken(user);
-           return ResponseEntity.ok(new ResponseDTO(user.getName(), user.getEmail(), token, user.getRole()));
+        Usuario usuario = this.usuarioRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        if(passwordEncoder.matches(body.password(), usuario.getPassword())){
+           String token = tokenService.generateToken(usuario);
+           return ResponseEntity.ok(new ResponseDTO(usuario.getName(), usuario.getEmail(), token, usuario.getRole()));
         }
         return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/signup")
     public ResponseEntity<ResponseDTO> signup(@RequestBody SignupRequestDTO body) {
-        Optional<User> user = userRepository.findByEmail(body.email());
+        Optional<Usuario> user = usuarioRepository.findByEmail(body.email());
 
         if (user.isEmpty()) {
-            User newUser = new User();
-            newUser.setEmail(body.email());
-            newUser.setPassword(passwordEncoder.encode(body.password()));
-            newUser.setName(body.name());
-            newUser.setRole("USUARIO");
-            userRepository.save(newUser);
+            Usuario newUsuario = new Usuario();
+            newUsuario.setEmail(body.email());
+            newUsuario.setPassword(passwordEncoder.encode(body.password()));
+            newUsuario.setName(body.name());
+            newUsuario.setRole("USUARIO");
+            usuarioRepository.save(newUsuario);
 
-            String token = tokenService.generateToken(newUser);
-            return ResponseEntity.ok(new ResponseDTO(newUser.getName(), newUser.getEmail(), token, newUser.getRole()));
+            String token = tokenService.generateToken(newUsuario);
+            return ResponseEntity.ok(new ResponseDTO(newUsuario.getName(), newUsuario.getEmail(), token, newUsuario.getRole()));
         }
         return ResponseEntity.badRequest().build();
     }

@@ -7,26 +7,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ORDERS")
+@Table(name = "tb_pedido")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Usuario cliente;
 
-    @Column(nullable = false)
-    private Long data_pedido;
+    @Column(name = "data_pedido", nullable = false)
+    private Long data;
 
-    @Column(nullable = false)
+    @Column(name = "valor_pedido", nullable = false)
     private double valor;
 
-    @Column(nullable = false)
+    @Column(name = "status_pedido", nullable = false)
     private String status;
+
 }

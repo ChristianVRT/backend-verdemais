@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.backend_verdemais.entities.User;
+import com.example.backend_verdemais.entities.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +18,14 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(User user) {
+    public String generateToken(Usuario usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             String token = JWT.create()
                     .withIssuer("backend-verdemais")
-                    .withSubject(user.getEmail())
-                    .withClaim("role", user.getRole())
+                    .withSubject(usuario.getEmail())
+                    .withClaim("role", usuario.getRole())
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
             return token;
