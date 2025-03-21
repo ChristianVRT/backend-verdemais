@@ -19,17 +19,20 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long idUsuario;
 
-    @Column(name = "name_usuario", unique = true, nullable = false)
+    @Column(name = "nome_usuario", unique = true, nullable = false)
     private String name;
 
     @Column(name = "email_usuario", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password_usuario", unique = true, nullable = false)
+    @Column(name = "senha_usuario", unique = true, nullable = false)
     private String password;
 
     @Column(name = "role_usuario", unique = true, nullable = false)
     private String role;
+
+    @Column(name = "habilitado_usuario", unique = true, nullable = false)
+    private boolean habilitado;
 
     @Column(name = "data_criacao_usuario")
     private Long dataCriacao;

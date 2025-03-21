@@ -1,9 +1,9 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.LoginRequestDTO;
+import com.example.backend_verdemais.dto.LoginDTO;
 import com.example.backend_verdemais.dto.ResponseDTO;
 
-import com.example.backend_verdemais.dto.SignupRequestDTO;
+import com.example.backend_verdemais.dto.SignupDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
 import com.example.backend_verdemais.security.TokenService;
@@ -29,7 +29,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body){
+    public ResponseEntity<ResponseDTO> login(@RequestBody LoginDTO body){
         Usuario usuario = this.usuarioRepository.findByEmail(body.email());
                 if (isNull(usuario)) throw new RuntimeException("Usuário não encontrado");
         if(passwordEncoder.matches(body.password(), usuario.getPassword())){
@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseDTO> signup(@RequestBody SignupRequestDTO body) {
+    public ResponseEntity<ResponseDTO> signup(@RequestBody SignupDTO body) {
         Usuario user = usuarioRepository.findByEmail(body.email());
 
         if (!isNull(user)) {
