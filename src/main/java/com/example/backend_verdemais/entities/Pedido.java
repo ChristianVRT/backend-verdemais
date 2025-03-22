@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_pedido")
 @Getter
@@ -30,5 +33,8 @@ public class Pedido {
 
     @Column(name = "status_pedido", nullable = false)
     private String status;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidoMercadoria> pedidoMercadorias = new ArrayList<>();
 
 }

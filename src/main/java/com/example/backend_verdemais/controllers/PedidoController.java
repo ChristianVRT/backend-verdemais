@@ -19,7 +19,6 @@ public class PedidoController {
 
     @GetMapping()
     public ResponseEntity<List<PedidoDTO>> getAllPedidos() {
-        List<PedidoDTO> pedidos = pedidoService.getAllPedidos();
-        return ResponseEntity.ok(pedidos);
+        return ResponseEntity.ok(pedidoService.getAllPedidos());
     }
 }

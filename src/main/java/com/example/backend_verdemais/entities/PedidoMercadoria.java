@@ -18,11 +18,11 @@ public class PedidoMercadoria {
     @Column(name = "id_pedido_mercadoria")
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_pedido", nullable = false)
     private Pedido pedido;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_mercadoria", nullable = false)
     private Mercadoria mercadoria;
 
