@@ -20,7 +20,7 @@ public class Usuario {
     private Long idUsuario;
 
     @Column(name = "nome_usuario", unique = true, nullable = false)
-    private String name;
+    private String nome;
 
     @Column(name = "email_usuario", unique = true, nullable = false)
     private String email;
@@ -32,7 +32,7 @@ public class Usuario {
     private String role;
 
     @Column(name = "habilitado_usuario", unique = true, nullable = false)
-    private boolean habilitado;
+    private Boolean habilitado;
 
     @Column(name = "data_criacao_usuario")
     private Long dataCriacao;

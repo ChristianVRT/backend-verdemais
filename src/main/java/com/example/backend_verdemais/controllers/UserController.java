@@ -1,12 +1,10 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.UsuarioResumidoDTO;
+import com.example.backend_verdemais.dto.UsuarioDTO;
 import com.example.backend_verdemais.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +16,15 @@ public class UserController {
     private UsuarioService usuarioService;
 
     @GetMapping()
-    public ResponseEntity<List<UsuarioResumidoDTO>> getAllUsers() {
-        List<UsuarioResumidoDTO> usuarios = usuarioService.getAllUsuariosResumidos();
+    public ResponseEntity<List<UsuarioDTO>> getAllUsers() {
+        List<UsuarioDTO> usuarios = usuarioService.getAllUsuariosResumidos();
         return ResponseEntity.ok(usuarios);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> desativarUsuario(@PathVariable Long id, UsuarioDTO usuarioDTO) {
+        UsuarioDTO usuario = usuarioService.desativarUsuario(id, usuarioDTO);
+        return ResponseEntity.ok(usuario);
     }
 
 }
