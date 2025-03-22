@@ -35,9 +35,8 @@ public class MercadoriaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<MercadoriaDTO> updateMercadoria(
-            @PathVariable Long id, @RequestBody MercadoriaDTO mercadoriaDTO,
-            @RequestHeader("Authorization") String token) {
-        MercadoriaDTO mercadoria = mercadoriaService.updateMercadoria(id, mercadoriaDTO, token);
+            @RequestBody MercadoriaDTO mercadoriaDTO, @RequestHeader("Authorization") String token) {
+        MercadoriaDTO mercadoria = mercadoriaService.updateMercadoria(mercadoriaDTO, token);
         return ResponseEntity.status(HttpStatus.OK).body(mercadoria);
     }
 

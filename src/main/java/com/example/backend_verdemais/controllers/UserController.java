@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> desativarUsuario(@PathVariable Long id, UsuarioDTO usuarioDTO) {
-        UsuarioDTO usuario = usuarioService.desativarUsuario(id, usuarioDTO);
+    public ResponseEntity<UsuarioDTO> desativarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        UsuarioDTO usuario = usuarioService.desativarUsuario(usuarioDTO);
         return ResponseEntity.ok(usuario);
     }
 

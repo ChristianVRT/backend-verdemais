@@ -12,9 +12,10 @@ public class UsuarioMapper {
             return null;
         }
         return new UsuarioDTO(
-                usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getHabilitado()
+            usuario.getIdUsuario(),
+            usuario.getNome(),
+            usuario.getEmail(),
+            usuario.getHabilitado()
         );
     }
 }

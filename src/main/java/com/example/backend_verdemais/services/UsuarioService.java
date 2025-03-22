@@ -1,10 +1,7 @@
 package com.example.backend_verdemais.services;
 
-import com.example.backend_verdemais.dto.MercadoriaDTO;
 import com.example.backend_verdemais.dto.UsuarioDTO;
-import com.example.backend_verdemais.entities.Mercadoria;
 import com.example.backend_verdemais.entities.Usuario;
-import com.example.backend_verdemais.mappers.MercadoriaMapper;
 import com.example.backend_verdemais.mappers.UsuarioMapper;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +20,11 @@ public class UsuarioService {
         return usuarioRepository.findAllUsuariosResumidos();
     }
 
-    public UsuarioDTO desativarUsuario(Long id, UsuarioDTO usuarioDTO) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrada para o ID: " + id));
+    public UsuarioDTO desativarUsuario(UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioRepository.findById(usuarioDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrada para o ID: " + usuarioDTO.id()));
 
+        usuario.setIdUsuario(usuarioDTO.id());
         usuario.setNome(usuarioDTO.nome());
         usuario.setHabilitado(usuarioDTO.habilitado());
         usuario.setEmail(usuarioDTO.email());

@@ -16,7 +16,7 @@ public class MercadoriaMapper {
                 mercadoria.getNome(),
                 mercadoria.getPreco(),
                 mercadoria.getHabilitado(),
-                mercadoria.getUsuario().getNome()
+                mercadoria.getUsuario()
         );
     }
 }

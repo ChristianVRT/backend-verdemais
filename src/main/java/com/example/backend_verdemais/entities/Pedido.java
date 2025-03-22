@@ -16,7 +16,7 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private Long id;
+    private Long idPedido;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
@@ -26,7 +26,7 @@ public class Pedido {
     private Long data;
 
     @Column(name = "valor_pedido", nullable = false)
-    private double valor;
+    private Double valor;
 
     @Column(name = "status_pedido", nullable = false)
     private String status;

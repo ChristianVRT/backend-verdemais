@@ -15,6 +15,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findById(Long id);
 
-    @Query("SELECT new com.example.backend_verdemais.dto.UsuarioDTO(u.nome, u.email, u.habilitado) FROM Usuario u")
+    @Query("SELECT new com.example.backend_verdemais.dto.UsuarioDTO(u.idUsuario ,u.nome, u.email, u.habilitado) FROM Usuario u")
     List<UsuarioDTO> findAllUsuariosResumidos();
 }

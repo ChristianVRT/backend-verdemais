@@ -39,10 +39,10 @@ public class MercadoriaService {
         return MercadoriaMapper.paraDTO(mercadoriaSalvo);
     }
 
-    public MercadoriaDTO updateMercadoria(Long id, MercadoriaDTO mercadoriaDTO, String token) {
+    public MercadoriaDTO updateMercadoria(MercadoriaDTO mercadoriaDTO, String token) {
 
-        Mercadoria mercadoria = mercadoriaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + id));
+        Mercadoria mercadoria = mercadoriaRepository.findById(mercadoriaDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));
 
         preencheMercadoria(mercadoriaDTO, mercadoria, token);
         Mercadoria mercadoriaAtualizado = mercadoriaRepository.save(mercadoria);
