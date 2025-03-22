@@ -23,7 +23,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> desativarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO usuario = usuarioService.desativarUsuario(usuarioDTO);
+        UsuarioDTO usuario = usuarioService.updateUsuario(usuarioDTO);
         return ResponseEntity.ok(usuario);
     }
 

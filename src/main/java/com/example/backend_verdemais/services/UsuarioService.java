@@ -20,11 +20,11 @@ public class UsuarioService {
         return usuarioRepository.findAllUsuariosResumidos();
     }
 
-    public UsuarioDTO desativarUsuario(UsuarioDTO usuarioDTO) {
+    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO) {
         Usuario usuario = usuarioRepository.findById(usuarioDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrada para o ID: " + usuarioDTO.id()));
 
-        usuario.setIdUsuario(usuarioDTO.id());
+        usuario.setId(usuarioDTO.id());
         usuario.setNome(usuarioDTO.nome());
         usuario.setHabilitado(usuarioDTO.habilitado());
         usuario.setEmail(usuarioDTO.email());

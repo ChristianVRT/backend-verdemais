@@ -2,6 +2,7 @@ package com.example.backend_verdemais.services;
 
 import com.example.backend_verdemais.dto.MercadoriaDTO;
 import com.example.backend_verdemais.entities.Mercadoria;
+import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.mappers.MercadoriaMapper;
 import com.example.backend_verdemais.repositories.MercadoriaRepository;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
@@ -31,29 +32,29 @@ public class MercadoriaService {
                 .map(MercadoriaMapper::paraDTO).collect(Collectors.toList());
     }
 
-    public MercadoriaDTO postMercadoria(MercadoriaDTO mercadoriaDTO, String token) {
+    public MercadoriaDTO postMercadoria(MercadoriaDTO mercadoriaDTO, Usuario usuario) {
 
         Mercadoria mercadoria = new Mercadoria();
-        preencheMercadoria(mercadoriaDTO, mercadoria, token);
+        preencheMercadoria(mercadoriaDTO, mercadoria, usuario);
         Mercadoria mercadoriaSalvo = mercadoriaRepository.save(mercadoria);
         return MercadoriaMapper.paraDTO(mercadoriaSalvo);
     }
 
-    public MercadoriaDTO updateMercadoria(MercadoriaDTO mercadoriaDTO, String token) {
+    public MercadoriaDTO updateMercadoria(Long id, MercadoriaDTO mercadoriaDTO, Usuario usuario) {
 
-        Mercadoria mercadoria = mercadoriaRepository.findById(mercadoriaDTO.id())
-                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + mercadoriaDTO.id()));
+        Mercadoria mercadoria = mercadoriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + id));
 
-        preencheMercadoria(mercadoriaDTO, mercadoria, token);
+        preencheMercadoria(mercadoriaDTO, mercadoria, usuario);
         Mercadoria mercadoriaAtualizado = mercadoriaRepository.save(mercadoria);
         return MercadoriaMapper.paraDTO(mercadoriaAtualizado);
     }
 
-    private void preencheMercadoria(MercadoriaDTO mercadoriaDTO, Mercadoria mercadoria, String token) {
+    private void preencheMercadoria(MercadoriaDTO mercadoriaDTO, Mercadoria mercadoria, Usuario usuario) {
         mercadoria.setNome(mercadoriaDTO.nome());
         mercadoria.setPreco(mercadoriaDTO.preco());
         mercadoria.setHabilitado(mercadoriaDTO.habilitado());
-        mercadoria.setUsuario(usuarioRepository.findByEmail(tokenService.extrairEmail(token)));
+        mercadoria.setUsuario(usuario);
     }
 
     public void deleteMercadoria(Long id) {

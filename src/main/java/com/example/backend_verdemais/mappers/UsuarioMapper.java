@@ -12,7 +12,7 @@ public class UsuarioMapper {
             return null;
         }
         return new UsuarioDTO(
-            usuario.getIdUsuario(),
+            usuario.getId(),
             usuario.getNome(),
             usuario.getEmail(),
             usuario.getHabilitado()

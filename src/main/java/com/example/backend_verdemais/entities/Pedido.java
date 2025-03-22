@@ -19,14 +19,14 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private Long idPedido;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Usuario cliente;
 
     @Column(name = "data_pedido", nullable = false)
-    private Long data;
+    private Long data_pedido;
 
     @Column(name = "valor_pedido", nullable = false)
     private Double valor;
@@ -35,6 +35,6 @@ public class Pedido {
     private String status;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PedidoMercadoria> pedidoMercadorias = new ArrayList<>();
+    private List<MercadoriasPedido> mercadoriasPedidos = new ArrayList<>();
 
 }

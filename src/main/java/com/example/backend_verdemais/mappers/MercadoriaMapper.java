@@ -12,11 +12,9 @@ public class MercadoriaMapper {
             return null;
         }
         return new MercadoriaDTO(
-                mercadoria.getId(),
                 mercadoria.getNome(),
                 mercadoria.getPreco(),
-                mercadoria.getHabilitado(),
-                mercadoria.getUsuario()
+                mercadoria.getHabilitado()
         );
     }
 }
