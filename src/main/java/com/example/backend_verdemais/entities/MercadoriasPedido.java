@@ -26,9 +26,9 @@ public class MercadoriasPedido {
     @JoinColumn(name = "id_mercadoria", nullable = false)
     private Mercadoria mercadoria;
 
-    @Column(name = "quantidade_pedido_mercadoria", nullable = false)
+    @Column(name = "quantidade_mercadorias_pedido", nullable = false)
     private int quantidade;
 
-    @Column(name = "preco_unitario_pedido_mercadoria", nullable = false)
-    private double precoUnitario;
+    @Column(name = "preco_mercadorias_pedido", nullable = false)
+    private Double preco;
 }

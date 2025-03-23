@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.repositories;
 
-import com.example.backend_verdemais.dto.UsuarioDTO;
+import com.example.backend_verdemais.dto.request.UsuarioRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +15,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findById(Long id);
 
-    @Query("SELECT new com.example.backend_verdemais.dto.UsuarioDTO(u.id ,u.nome, u.email, u.habilitado) FROM Usuario u")
-    List<UsuarioDTO> findAllUsuariosResumidos();
+    @Query("SELECT new com.example.backend_verdemais.dto.request.UsuarioRequestDTO(u.id ,u.nome, u.email, u.habilitado) FROM Usuario u")
+    List<UsuarioRequestDTO> findAllUsuariosResumidos();
 }

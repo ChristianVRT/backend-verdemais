@@ -1,9 +1,9 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.LoginDTO;
-import com.example.backend_verdemais.dto.ResponseDTO;
+import com.example.backend_verdemais.dto.request.LoginRequestDTO;
+import com.example.backend_verdemais.dto.response.LoginResponseDTO;
 
-import com.example.backend_verdemais.dto.SignupDTO;
+import com.example.backend_verdemais.dto.request.SignupRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
 import com.example.backend_verdemais.security.TokenService;
@@ -29,18 +29,18 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseDTO> login(@RequestBody LoginDTO body){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO body){
         Usuario usuario = this.usuarioRepository.findByEmail(body.email());
                 if (isNull(usuario)) throw new RuntimeException("Usuário não encontrado");
         if(passwordEncoder.matches(body.password(), usuario.getPassword())){
            String token = tokenService.generateToken(usuario);
-           return ResponseEntity.ok(new ResponseDTO(usuario.getNome(), usuario.getEmail(), token, usuario.getRole()));
+           return ResponseEntity.ok(new LoginResponseDTO(usuario.getNome(), usuario.getEmail(), token, usuario.getRole()));
         }
         return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseDTO> signup(@RequestBody SignupDTO body) {
+    public ResponseEntity<LoginResponseDTO> signup(@RequestBody SignupRequestDTO body) {
         Usuario user = usuarioRepository.findByEmail(body.email());
 
         if (!isNull(user)) {
@@ -52,7 +52,7 @@ public class AuthController {
             usuarioRepository.save(newUsuario);
 
             String token = tokenService.generateToken(newUsuario);
-            return ResponseEntity.ok(new ResponseDTO(newUsuario.getNome(), newUsuario.getEmail(), token, newUsuario.getRole()));
+            return ResponseEntity.ok(new LoginResponseDTO(newUsuario.getNome(), newUsuario.getEmail(), token, newUsuario.getRole()));
         }
         return ResponseEntity.badRequest().build();
     }

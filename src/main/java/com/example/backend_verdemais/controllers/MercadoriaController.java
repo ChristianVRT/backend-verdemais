@@ -1,12 +1,10 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.MercadoriaDTO;
+import com.example.backend_verdemais.dto.request.MercadoriaRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
-import com.example.backend_verdemais.security.SecurityFilter;
 import com.example.backend_verdemais.security.TokenService;
 import com.example.backend_verdemais.services.MercadoriaService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,25 +26,25 @@ public class MercadoriaController {
     UsuarioRepository usuarioRepository;
 
     @GetMapping()
-    public ResponseEntity<List<MercadoriaDTO>> getAllMercadorias() {
-        List<MercadoriaDTO> mercadorias = mercadoriaService.getAllMercadorias();
+    public ResponseEntity<List<MercadoriaRequestDTO>> getAllMercadorias() {
+        List<MercadoriaRequestDTO> mercadorias = mercadoriaService.getAllMercadorias();
         return ResponseEntity.ok(mercadorias);
     }
 
     @PostMapping()
-    public ResponseEntity<MercadoriaDTO> postMercadoria(
-            @RequestBody MercadoriaDTO mercadoriaDTO, @RequestHeader("Authorization") String token
+    public ResponseEntity<MercadoriaRequestDTO> postMercadoria(
+            @RequestBody MercadoriaRequestDTO mercadoriaRequestDTO, @RequestHeader("Authorization") String token
     ) {
         Usuario usuario = getUsuario(token);
-        MercadoriaDTO mercadoria = mercadoriaService.postMercadoria(mercadoriaDTO, usuario);
+        MercadoriaRequestDTO mercadoria = mercadoriaService.postMercadoria(mercadoriaRequestDTO, usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(mercadoria);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MercadoriaDTO> updateMercadoria(
-            @PathVariable Long id, @RequestBody MercadoriaDTO mercadoriaDTO, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<MercadoriaRequestDTO> updateMercadoria(
+            @PathVariable Long id, @RequestBody MercadoriaRequestDTO mercadoriaRequestDTO, @RequestHeader("Authorization") String token) {
         Usuario usuario = getUsuario(token);
-        MercadoriaDTO mercadoria = mercadoriaService.updateMercadoria(id, mercadoriaDTO, usuario);
+        MercadoriaRequestDTO mercadoria = mercadoriaService.updateMercadoria(id, mercadoriaRequestDTO, usuario);
         return ResponseEntity.status(HttpStatus.OK).body(mercadoria);
     }
 

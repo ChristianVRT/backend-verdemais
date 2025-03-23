@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.services;
 
-import com.example.backend_verdemais.dto.UsuarioDTO;
+import com.example.backend_verdemais.dto.request.UsuarioRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.mappers.UsuarioMapper;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
@@ -16,11 +16,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<UsuarioDTO> getAllUsuariosResumidos() {
+    public List<UsuarioRequestDTO> getAllUsuariosResumidos() {
         return usuarioRepository.findAllUsuariosResumidos();
     }
 
-    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO) {
+    public UsuarioRequestDTO updateUsuario(UsuarioRequestDTO usuarioDTO) {
         Usuario usuario = usuarioRepository.findById(usuarioDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrada para o ID: " + usuarioDTO.id()));
 
