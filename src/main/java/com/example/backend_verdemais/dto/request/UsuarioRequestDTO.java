@@ -1,7 +1,7 @@
-package com.example.backend_verdemais.dto;
+package com.example.backend_verdemais.dto.request;
 
 
-public record UsuarioDTO(
+public record UsuarioRequestDTO(
         Long id,
         String nome,
         String email,
