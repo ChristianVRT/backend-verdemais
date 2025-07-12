@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.repositories;
 
-import com.example.backend_verdemais.dto.request.UsuarioRequestDTO;
+import com.example.backend_verdemais.dto.UsuarioRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.request.MercadoriaRequestDTO;
+import com.example.backend_verdemais.dto.MercadoriaRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
 import com.example.backend_verdemais.security.TokenService;

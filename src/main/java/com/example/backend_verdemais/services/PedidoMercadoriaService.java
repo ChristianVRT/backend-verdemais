@@ -2,7 +2,6 @@ package com.example.backend_verdemais.services;
 
 import com.example.backend_verdemais.dto.PedidoMercadoriaDTO;
 import com.example.backend_verdemais.entities.Mercadoria;
-import com.example.backend_verdemais.entities.Pedido;
 import com.example.backend_verdemais.entities.PedidoMercadoria;
 import com.example.backend_verdemais.repositories.MercadoriaRepository;
 import com.example.backend_verdemais.repositories.PedidoMercadoriaRepository;
@@ -26,7 +25,7 @@ public class PedidoMercadoriaService {
     MercadoriaRepository mercadoriaRepository;
 
     public PedidoMercadoria adicionarMercadoria(PedidoMercadoriaDTO dto) {
-        Pedido pedido = pedidoRepository.findById(dto.pedidoId())
+        PedidoMercadoria pedido = pedidoRepository.findById(dto.pedidoId())
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
 
         Mercadoria mercadoria = mercadoriaRepository.findById(dto.mercadoriaId())

@@ -20,7 +20,7 @@ public class MercadoriasPedido {
 
     @ManyToOne
     @JoinColumn(name = "id_pedido", nullable = false)
-    private Pedido pedido;
+    private PedidoMercadoria pedido;
 
     @ManyToOne
     @JoinColumn(name = "id_mercadoria", nullable = false)

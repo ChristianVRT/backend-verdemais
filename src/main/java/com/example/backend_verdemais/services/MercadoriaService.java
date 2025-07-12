@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.services;
 
-import com.example.backend_verdemais.dto.request.MercadoriaRequestDTO;
+import com.example.backend_verdemais.dto.MercadoriaRequestDTO;
 import com.example.backend_verdemais.entities.Mercadoria;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.mappers.MercadoriaMapper;

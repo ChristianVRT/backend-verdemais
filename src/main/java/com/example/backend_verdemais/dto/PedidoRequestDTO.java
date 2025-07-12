@@ -1,4 +1,4 @@
-package com.example.backend_verdemais.dto.request;
+package com.example.backend_verdemais.dto;
 
 import java.util.List;
 
