@@ -66,7 +66,8 @@ public class TokenService {
 
     public String extrairEmail(String token){
         DecodedJWT decodedJWT = getDecodedJWT(token);
-        return decodedJWT.getClaim("email").asString();
+        String email = decodedJWT.getClaim("email").asString();
+        return email;
     }
 
     public boolean isAdmin(String token){

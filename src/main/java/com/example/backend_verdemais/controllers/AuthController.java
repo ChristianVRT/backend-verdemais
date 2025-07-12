@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import java.time.LocalDateTime;
+import java.util.TimeZone;
+
 import static java.util.Objects.isNull;
 
 @RestController
@@ -43,17 +46,19 @@ public class AuthController {
     public ResponseEntity<ResponseDTO> signup(@RequestBody SignupDTO body) {
         Usuario user = usuarioRepository.findByEmail(body.email());
 
-        if (!isNull(user)) {
+        if (user != null) {
+            return ResponseEntity.badRequest().build();
+        }
             Usuario newUsuario = new Usuario();
             newUsuario.setEmail(body.email());
             newUsuario.setPassword(passwordEncoder.encode(body.password()));
             newUsuario.setNome(body.name());
-            newUsuario.setRole("USUARIO");
+            newUsuario.setRole("ADMIN");
+            newUsuario.setHabilitado(true);
+            newUsuario.setDataCriacao(LocalDateTime.now());
             usuarioRepository.save(newUsuario);
 
             String token = tokenService.generateToken(newUsuario);
             return ResponseEntity.ok(new ResponseDTO(newUsuario.getNome(), newUsuario.getEmail(), token, newUsuario.getRole()));
-        }
-        return ResponseEntity.badRequest().build();
     }
 }

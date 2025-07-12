@@ -37,7 +37,7 @@ public class PedidoMercadoriaService {
     }
 
     public List<PedidoMercadoria> listarItensDoPedido(Long pedidoId) {
-        return pedidoMercadoriaRepository.findByPedidoId(pedidoId);
+        return pedidoMercadoriaRepository.findByPedido_IdPedido(pedidoId);
     }
 
     public void removerItem(Long id) {
