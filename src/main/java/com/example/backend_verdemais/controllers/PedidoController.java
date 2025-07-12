@@ -1,10 +1,7 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.request.PedidoRequestDTO;
+import com.example.backend_verdemais.dto.PedidoDTO;
 import com.example.backend_verdemais.entities.Pedido;
-import com.example.backend_verdemais.entities.Usuario;
-import com.example.backend_verdemais.repositories.UsuarioRepository;
-import com.example.backend_verdemais.security.TokenService;
 import com.example.backend_verdemais.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,29 +17,33 @@ public class PedidoController {
     @Autowired
     PedidoService pedidoService;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
-
-    @Autowired
-    TokenService tokenService;
-
-    @GetMapping()
-    public ResponseEntity<List<PedidoRequestDTO>> getAllPedidos() {
-        return ResponseEntity.ok(pedidoService.getAllPedidos());
-    }
-
-    @PostMapping()
-    public ResponseEntity<Pedido> createPedido(
-            @RequestBody PedidoRequestDTO pedidoRequestDTO, @RequestHeader("Authorization") String token) {
-        if (pedidoRequestDTO.mercadorias().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        Usuario usuario = getUsuario(token);
-        Pedido pedido = pedidoService.criarPedido(pedidoRequestDTO, usuario);
+    @PostMapping
+    public ResponseEntity<Pedido> criarPedido(@RequestBody PedidoDTO pedidoDTO) {
+        Pedido pedido = pedidoService.criarPedido(pedidoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
     }
 
-    public Usuario getUsuario(String token) {
-        return usuarioRepository.findByEmail(tokenService.extrairEmail(token));
+    @GetMapping
+    public ResponseEntity<List<Pedido>> listarPedidos() {
+        List<Pedido> pedidos = pedidoService.listarPedidos();
+        return ResponseEntity.ok(pedidos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Pedido> buscarPedidoPorId(@PathVariable Long id) {
+        Pedido pedido = pedidoService.buscarPedidoPorId(id);
+        return ResponseEntity.ok(pedido);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Pedido> atualizarPedido(@PathVariable Long id, @RequestBody PedidoDTO pedidoDTO) {
+        Pedido pedidoAtualizado = pedidoService.atualizarPedido(id, pedidoDTO);
+        return ResponseEntity.ok(pedidoAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPedido(@PathVariable Long id) {
+        pedidoService.deletarPedido(id);
+        return ResponseEntity.noContent().build();
     }
 }

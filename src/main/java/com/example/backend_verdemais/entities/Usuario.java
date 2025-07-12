@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "TB_USUARIO")
 @Getter
@@ -35,5 +38,5 @@ public class Usuario {
     private Boolean habilitado;
 
     @Column(name = "data_criacao_usuario")
-    private Long dataCriacao;
+    private LocalDateTime dataCriacao;
 }

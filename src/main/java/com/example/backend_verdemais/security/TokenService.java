@@ -64,15 +64,11 @@ public class TokenService {
         }
     }
 
-    public String extrairEmail(String token) {
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
+    public String extrairEmail(String token){
         DecodedJWT decodedJWT = getDecodedJWT(token);
-        String email = decodedJWT.getSubject();
+        String email = decodedJWT.getClaim("email").asString();
         return email;
     }
-
 
     public boolean isAdmin(String token){
         DecodedJWT decodedJWT = getDecodedJWT(token);
@@ -80,6 +76,6 @@ public class TokenService {
     }
 
     private Instant generateExpirationDate(){
-        return LocalDateTime.now().plusDays(1).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }

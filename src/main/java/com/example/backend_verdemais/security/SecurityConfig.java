@@ -32,10 +32,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/signup", "/mercadoria*", "/user", "/mercadoria/{id}", "/pedidos").permitAll()
+                        .requestMatchers(
+                                "/auth/login",
+                                "/auth/signup",
+                                "/mercadoria*",
+                                "/user",
+                                "/mercadoria/{id}",
+                                "/h2-console/**"
+                        ).permitAll()
                         //.requestMatchers("/mercadoria*").hasRole("USUARIO")
                         .anyRequest().authenticated()
                 )
+                .headers(headers -> headers.frameOptions().sameOrigin())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
