@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class PedidoMercadoria {
     private Usuario cliente;
 
     @Column(name = "data_pedido", nullable = false)
-    private Long data_pedido;
+    private LocalDateTime data_pedido;
 
     @Column(name = "valor_pedido", nullable = false)
     private Double valor;

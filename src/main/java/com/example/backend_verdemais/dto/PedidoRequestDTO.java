@@ -1,8 +1,14 @@
 package com.example.backend_verdemais.dto;
 
+import com.example.backend_verdemais.entities.MercadoriasPedido;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.List;
 
-public record PedidoRequestDTO(
-        Long dataPedido,
-        List<MercadoriasPedidoRequestDTO> mercadorias
-) {}
+@AllArgsConstructor
+@Getter
+public class PedidoRequestDTO {
+    private List<MercadoriasPedido> mercadorias;
+
+}

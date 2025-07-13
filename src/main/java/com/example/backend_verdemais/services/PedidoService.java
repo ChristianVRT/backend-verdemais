@@ -8,6 +8,7 @@ import com.example.backend_verdemais.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,10 @@ public class PedidoService {
     UsuarioRepository usuarioRepository;
 
     public PedidoMercadoria criarPedido(PedidoDTO dto) {
-        Usuario cliente = usuarioRepository.findById(dto.cliente().getIdUsuario())
+        Usuario cliente = usuarioRepository.findById(dto.cliente().getId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-        PedidoMercadoria pedido = new PedidoMercadoria(null, cliente, dto.data_pedido(), dto.valor(), dto.status(), new ArrayList<>());
+        PedidoMercadoria pedido = new PedidoMercadoria(null, cliente, LocalDateTime.now(), dto.valor(), dto.status(), new ArrayList<>());
         return pedidoRepository.save(pedido);
     }
 
@@ -39,7 +40,7 @@ public class PedidoService {
 
     public PedidoMercadoria atualizarPedido(Long id, PedidoDTO dto) {
         PedidoMercadoria pedido = buscarPedidoPorId(id);
-        pedido.setData(dto.data_pedido());
+        pedido.setData_pedido(LocalDateTime.now());
         pedido.setValor(dto.valor());
         pedido.setStatus(dto.status());
         return pedidoRepository.save(pedido);

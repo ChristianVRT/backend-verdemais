@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends JpaRepository<PedidoMercadoria, Long> {
 
-    @Query("SELECT new com.example.backend_verdemais.dto.request.PedidoRequestDTO(p.data_pedido, p.mercadoriasPedidos) FROM PedidoMercadoria p")
+    @Query("SELECT new com.example.backend_verdemais.dto.PedidoRequestDTO(p.mercadoriasPedidos) FROM PedidoMercadoria p")
     List<PedidoRequestDTO> findAllPedidos();
 }

@@ -1,6 +1,7 @@
 package com.example.backend_verdemais.controllers;
 
 import com.example.backend_verdemais.dto.PedidoMercadoriaDTO;
+import com.example.backend_verdemais.entities.MercadoriasPedido;
 import com.example.backend_verdemais.entities.PedidoMercadoria;
 import com.example.backend_verdemais.services.PedidoMercadoriaService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class PedidoMercadoriaController {
     }
 
     @GetMapping("/{pedidoId}")
-    public ResponseEntity<List<PedidoMercadoria>> listarItensDoPedido(@PathVariable Long pedidoId) {
-        List<PedidoMercadoria> itens = pedidoMercadoriaService.listarItensDoPedido(pedidoId);
+    public ResponseEntity<List<MercadoriasPedido>> listarItensDoPedido(@PathVariable Long pedidoId) {
+        List<MercadoriasPedido> itens = pedidoMercadoriaService.listarItensDoPedido(pedidoId);
         return ResponseEntity.ok(itens);
     }
 
