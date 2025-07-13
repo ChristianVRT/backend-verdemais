@@ -1,6 +1,7 @@
 package com.example.backend_verdemais.services;
 
 import com.example.backend_verdemais.dto.MercadoriaRequestDTO;
+import com.example.backend_verdemais.dto.MercadoriaResponseDTO;
 import com.example.backend_verdemais.entities.Mercadoria;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.mappers.MercadoriaMapper;
@@ -20,34 +21,27 @@ public class MercadoriaService {
     @Autowired
     private MercadoriaRepository mercadoriaRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private TokenService tokenService;
-
-    public List<MercadoriaRequestDTO> getAllMercadorias() {
+    public List<MercadoriaResponseDTO> getAllMercadorias() {
         List<Mercadoria> mercadorias = mercadoriaRepository.findAll();
         return mercadorias.stream()
-                .map(MercadoriaMapper::paraDTO).collect(Collectors.toList());
+                .map(MercadoriaMapper::paraResponseDTO)
+                .toList();
     }
 
-    public MercadoriaRequestDTO postMercadoria(MercadoriaRequestDTO mercadoriaRequestDTO, Usuario usuario) {
-
+    public MercadoriaResponseDTO postMercadoria(MercadoriaRequestDTO mercadoriaRequestDTO, Usuario usuario) {
         Mercadoria mercadoria = new Mercadoria();
         preencheMercadoria(mercadoriaRequestDTO, mercadoria, usuario);
         Mercadoria mercadoriaSalvo = mercadoriaRepository.save(mercadoria);
-        return MercadoriaMapper.paraDTO(mercadoriaSalvo);
+        return MercadoriaMapper.paraResponseDTO(mercadoriaSalvo);
     }
 
-    public MercadoriaRequestDTO updateMercadoria(Long id, MercadoriaRequestDTO mercadoriaRequestDTO, Usuario usuario) {
-
+    public MercadoriaResponseDTO updateMercadoria(Long id, MercadoriaRequestDTO mercadoriaRequestDTO, Usuario usuario) {
         Mercadoria mercadoria = mercadoriaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Mercadoria não encontrada para o ID: " + id));
 
         preencheMercadoria(mercadoriaRequestDTO, mercadoria, usuario);
         Mercadoria mercadoriaAtualizado = mercadoriaRepository.save(mercadoria);
-        return MercadoriaMapper.paraDTO(mercadoriaAtualizado);
+        return MercadoriaMapper.paraResponseDTO(mercadoriaAtualizado);
     }
 
     private void preencheMercadoria(MercadoriaRequestDTO mercadoriaRequestDTO, Mercadoria mercadoria, Usuario usuario) {

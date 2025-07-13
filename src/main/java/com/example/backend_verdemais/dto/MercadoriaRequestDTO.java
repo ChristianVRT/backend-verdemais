@@ -4,5 +4,6 @@ public record MercadoriaRequestDTO(
         String nome,
         double preco,
         int quantidade,
-        Boolean habilitado
+        Boolean habilitado,
+        String nomeUsuario
 ) {}

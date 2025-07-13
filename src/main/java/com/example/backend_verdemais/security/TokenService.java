@@ -35,6 +35,9 @@ public class TokenService {
     }
 
     public DecodedJWT getDecodedJWT(String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
         Algorithm algorithm = Algorithm.HMAC256(secret);
         return JWT.require(algorithm)
                 .withIssuer("backend-verdemais")
@@ -66,8 +69,7 @@ public class TokenService {
 
     public String extrairEmail(String token){
         DecodedJWT decodedJWT = getDecodedJWT(token);
-        String email = decodedJWT.getClaim("email").asString();
-        return email;
+        return decodedJWT.getSubject();
     }
 
     public boolean isAdmin(String token){

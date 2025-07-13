@@ -1,6 +1,7 @@
 package com.example.backend_verdemais.controllers;
 
 import com.example.backend_verdemais.dto.MercadoriaRequestDTO;
+import com.example.backend_verdemais.dto.MercadoriaResponseDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.repositories.UsuarioRepository;
 import com.example.backend_verdemais.security.TokenService;
@@ -25,28 +26,33 @@ public class MercadoriaController {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    @GetMapping()
-    public ResponseEntity<List<MercadoriaRequestDTO>> getAllMercadorias() {
-        List<MercadoriaRequestDTO> mercadorias = mercadoriaService.getAllMercadorias();
+    @GetMapping
+    public ResponseEntity<List<MercadoriaResponseDTO>> getAllMercadorias() {
+        List<MercadoriaResponseDTO> mercadorias = mercadoriaService.getAllMercadorias();
         return ResponseEntity.ok(mercadorias);
     }
 
     @PostMapping()
-    public ResponseEntity<MercadoriaRequestDTO> postMercadoria(
-            @RequestBody MercadoriaRequestDTO mercadoriaRequestDTO, @RequestHeader("Authorization") String token
+    public ResponseEntity<MercadoriaResponseDTO> postMercadoria(
+            @RequestBody MercadoriaRequestDTO mercadoriaRequestDTO,
+            @RequestHeader("Authorization") String token
     ) {
         Usuario usuario = getUsuario(token);
-        MercadoriaRequestDTO mercadoria = mercadoriaService.postMercadoria(mercadoriaRequestDTO, usuario);
+        MercadoriaResponseDTO mercadoria = mercadoriaService.postMercadoria(mercadoriaRequestDTO, usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(mercadoria);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MercadoriaRequestDTO> updateMercadoria(
-            @PathVariable Long id, @RequestBody MercadoriaRequestDTO mercadoriaRequestDTO, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<MercadoriaResponseDTO> updateMercadoria(
+            @PathVariable Long id,
+            @RequestBody MercadoriaRequestDTO mercadoriaRequestDTO,
+            @RequestHeader("Authorization") String token
+    ) {
         Usuario usuario = getUsuario(token);
-        MercadoriaRequestDTO mercadoria = mercadoriaService.updateMercadoria(id, mercadoriaRequestDTO, usuario);
-        return ResponseEntity.status(HttpStatus.OK).body(mercadoria);
+        MercadoriaResponseDTO mercadoria = mercadoriaService.updateMercadoria(id, mercadoriaRequestDTO, usuario);
+        return ResponseEntity.ok(mercadoria);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMercadoria(@PathVariable Long id) {
@@ -56,7 +62,6 @@ public class MercadoriaController {
 
     public Usuario getUsuario(String token) {
         String email = tokenService.extrairEmail(token);
-        System.out.println("Email extraído do token: " + email);  // Adicione um log para verificar o email
         return usuarioRepository.findByEmail(email);
     }
 
