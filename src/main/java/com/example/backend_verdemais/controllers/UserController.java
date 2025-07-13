@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.controllers;
 
-import com.example.backend_verdemais.dto.request.UsuarioRequestDTO;
+import com.example.backend_verdemais.dto.UsuarioRequestDTO;
 import com.example.backend_verdemais.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

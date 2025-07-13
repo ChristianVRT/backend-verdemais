@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.mappers;
 
-import com.example.backend_verdemais.dto.request.MercadoriaRequestDTO;
+import com.example.backend_verdemais.dto.MercadoriaRequestDTO;
 import com.example.backend_verdemais.entities.Mercadoria;
 
 import static java.util.Objects.isNull;

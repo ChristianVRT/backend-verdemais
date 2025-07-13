@@ -1,6 +1,6 @@
 package com.example.backend_verdemais.services;
 
-import com.example.backend_verdemais.dto.request.UsuarioRequestDTO;
+import com.example.backend_verdemais.dto.UsuarioRequestDTO;
 import com.example.backend_verdemais.entities.Usuario;
 import com.example.backend_verdemais.mappers.UsuarioMapper;
 import com.example.backend_verdemais.repositories.UsuarioRepository;

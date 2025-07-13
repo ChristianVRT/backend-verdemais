@@ -2,9 +2,10 @@ package com.example.backend_verdemais.services;
 
 import com.example.backend_verdemais.dto.PedidoMercadoriaDTO;
 import com.example.backend_verdemais.entities.Mercadoria;
-import com.example.backend_verdemais.entities.Pedido;
+import com.example.backend_verdemais.entities.MercadoriasPedido;
 import com.example.backend_verdemais.entities.PedidoMercadoria;
 import com.example.backend_verdemais.repositories.MercadoriaRepository;
+import com.example.backend_verdemais.repositories.MercadoriasPedidoRepository;
 import com.example.backend_verdemais.repositories.PedidoMercadoriaRepository;
 import com.example.backend_verdemais.repositories.PedidoRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +26,29 @@ public class PedidoMercadoriaService {
     @Autowired
     MercadoriaRepository mercadoriaRepository;
 
+    @Autowired
+    MercadoriasPedidoRepository mercadoriasPedidoRepository;
+
     public PedidoMercadoria adicionarMercadoria(PedidoMercadoriaDTO dto) {
-        Pedido pedido = pedidoRepository.findById(dto.pedidoId())
+        PedidoMercadoria pedido = pedidoRepository.findById(dto.pedidoId())
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
 
         Mercadoria mercadoria = mercadoriaRepository.findById(dto.mercadoriaId())
                 .orElseThrow(() -> new RuntimeException("Mercadoria não encontrada"));
 
-        PedidoMercadoria pedidoMercadoria = new PedidoMercadoria(null, pedido, mercadoria, dto.quantidade(), dto.precoUnitario());
-        return pedidoMercadoriaRepository.save(pedidoMercadoria);
+        MercadoriasPedido mercadoriasPedido = new MercadoriasPedido();
+        mercadoriasPedido.setPedido(pedido);
+        mercadoriasPedido.setMercadoria(mercadoria);
+        mercadoriasPedido.setQuantidade(dto.quantidade());
+        mercadoriasPedido.setPreco(dto.precoUnitario());
+
+        pedido.getMercadoriasPedidos().add(mercadoriasPedido);
+
+        return pedidoMercadoriaRepository.save(pedido);
     }
 
-    public List<PedidoMercadoria> listarItensDoPedido(Long pedidoId) {
-        return pedidoMercadoriaRepository.findByPedido_IdPedido(pedidoId);
+    public List<MercadoriasPedido> listarItensDoPedido(Long pedidoId) {
+        return mercadoriasPedidoRepository.findByPedido_Id(pedidoId);
     }
 
     public void removerItem(Long id) {
